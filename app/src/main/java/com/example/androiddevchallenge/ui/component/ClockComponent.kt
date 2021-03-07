@@ -12,9 +12,10 @@ import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.ui.theme.typography
 
 @Composable
-fun Clock(hour: Int = 9,
-          minutes: Int = 0,
-          seconds: Int = 0) {
+fun Clock(
+    hour: Int = 9,
+    minutes: Int = 0,
+    seconds: Int = 0) {
     Row(modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center) {

@@ -17,33 +17,40 @@ package com.example.androiddevchallenge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.androiddevchallenge.model.Date
 import com.example.androiddevchallenge.ui.component.Clock
 import com.example.androiddevchallenge.ui.component.TopBar
 import com.example.androiddevchallenge.ui.theme.ClockTheme
 
 class MainActivity : AppCompatActivity() {
+    private val mainViewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            ClockTheme {
-                ClockScreen()
+        mainViewModel.loadTimer(10 * 1_000)
+        mainViewModel.currentDate.observe(this, { date: Date ->
+            setContent {
+                ClockTheme {
+                    ClockScreen(date)
+                }
             }
-        }
+        })
     }
 }
 
 @Composable
-fun ClockScreen() {
+fun ClockScreen(date: Date = Date(9, 0, 0)) {
     Surface(color = MaterialTheme.colors.background) {
         Column {
             TopBar()
-            Clock()
+            Clock(date.hour, date.minutes, date.seconds)
         }
     }
 }
