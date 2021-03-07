@@ -16,23 +16,16 @@
 package com.example.androiddevchallenge
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Surface
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.androiddevchallenge.ui.component.Clock
+import com.example.androiddevchallenge.ui.component.TopBar
 import com.example.androiddevchallenge.ui.theme.ClockTheme
-import com.example.androiddevchallenge.ui.theme.typography
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,38 +45,6 @@ fun ClockScreen() {
             TopBar()
             Clock()
         }
-    }
-}
-
-@Composable
-fun TopBar() {
-    TopAppBar(title = {
-        Row(horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                text = "Compose Clock",
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
-        }
-    })
-}
-
-@Composable
-fun Clock(hour: Int = 9,
-          minutes: Int = 0,
-          seconds: Int = 0) {
-    Row(modifier = Modifier.fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center) {
-        Text(text = String.format("%02d", hour),
-             style = typography.h1)
-        Text(text = ":",
-             modifier = Modifier.padding(4.dp))
-        Text(text = String.format("%02d", minutes),
-             style = typography.h1)
-        Text(text = ":",
-             modifier = Modifier.padding(4.dp))
-        Text(text = String.format("%02d", seconds),
-             style = typography.h1)
     }
 }
 
