@@ -5,17 +5,14 @@ plugins {
 
 android {
     compileSdkVersion 30
-
     defaultConfig {
         applicationId "com.example.androiddevchallenge"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     signingConfigs {
         // We use a bundled debug keystore, to allow debug builds from CI to be upgradable
         debug {
@@ -42,7 +39,6 @@ android {
 
     buildFeatures {
         compose true
-
         // Disable unused AGP features
         buildConfig false
         aidl false
@@ -75,7 +71,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
 
     testImplementation 'junit:junit:4.13.2'
-
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 }

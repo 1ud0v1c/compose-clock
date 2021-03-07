@@ -16,46 +16,89 @@
 package com.example.androiddevchallenge
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.androiddevchallenge.ui.theme.MyTheme
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.androiddevchallenge.ui.theme.ClockTheme
+import com.example.androiddevchallenge.ui.theme.typography
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyTheme {
-                MyApp()
+            ClockTheme {
+                ClockScreen()
             }
         }
     }
 }
 
-// Start building your app here!
 @Composable
-fun MyApp() {
+fun ClockScreen() {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        Column {
+            TopBar()
+            Clock()
+        }
+    }
+}
+
+@Composable
+fun TopBar() {
+    TopAppBar(title = {
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                text = "Compose Clock",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+        }
+    })
+}
+
+@Composable
+fun Clock(hour: Int = 9,
+          minutes: Int = 0,
+          seconds: Int = 0) {
+    Row(modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center) {
+        Text(text = String.format("%02d", hour),
+             style = typography.h1)
+        Text(text = ":",
+             modifier = Modifier.padding(4.dp))
+        Text(text = String.format("%02d", minutes),
+             style = typography.h1)
+        Text(text = ":",
+             modifier = Modifier.padding(4.dp))
+        Text(text = String.format("%02d", seconds),
+             style = typography.h1)
     }
 }
 
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
-    MyTheme {
-        MyApp()
+    ClockTheme {
+        ClockScreen()
     }
 }
 
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp()
+    ClockTheme(darkTheme = true) {
+        ClockScreen()
     }
 }
