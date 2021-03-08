@@ -1,22 +1,24 @@
 package com.example.androiddevchallenge
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androiddevchallenge.model.Date
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class MainViewModel: ViewModel(), MainRepository.TimerListener {
+    private var currentJob: Job? = null
+    private val date = Date(0,0,30)
     private val mainRepository: MainRepository = MainRepository(this)
-    private val mutableDate = MutableLiveData<Date>()
-    val currentDate: LiveData<Date> = mutableDate
+    val currentDate: MutableState<Date> = mutableStateOf(date)
 
-    fun loadTimer(timeInMs: Long = 60 * 1_000) {
-        viewModelScope.launch(Dispatchers.Default) {
-            mainRepository.launchTimer(timeInMs)
+    fun loadTimer() {
+        currentJob = viewModelScope.launch(Dispatchers.Default) {
+            mainRepository.launchTimer(date.toMs())
         }
     }
 
@@ -27,6 +29,11 @@ class MainViewModel: ViewModel(), MainRepository.TimerListener {
             remainingMinute.toInt(),
             (TimeUnit.MILLISECONDS.toSeconds(remainingTimeInMs) - TimeUnit.MINUTES.toSeconds(remainingMinute)).toInt()
         )
-        mutableDate.postValue(currentTime)
+        currentDate.value = currentTime
+    }
+
+    fun stopTimer() {
+        currentJob?.cancel()
+        currentDate.value = date
     }
 }

@@ -25,7 +25,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.androiddevchallenge.model.Date
 import com.example.androiddevchallenge.ui.component.ActionsComponent
 import com.example.androiddevchallenge.ui.component.Clock
 import com.example.androiddevchallenge.ui.component.DigitsComponent
@@ -37,24 +36,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel.loadTimer(10 * 1_000)
-        mainViewModel.currentDate.observe(this, { date: Date ->
-            setContent {
-                ClockTheme {
-                    ClockScreen(date)
-                }
+        setContent {
+            ClockTheme {
+                ClockScreen()
             }
-        })
+        }
     }
 
     @Composable
-    fun ClockScreen(date: Date = Date(0, 1, 0)) {
+    fun ClockScreen() {
+        val currentDate = mainViewModel.currentDate.value
         Surface(color = MaterialTheme.colors.background) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 TopBar()
-                Clock(date.hour, date.minutes, date.seconds)
+                Clock(currentDate.hour, currentDate.minutes, currentDate.seconds)
                 DigitsComponent()
-                ActionsComponent({}, {})
+                ActionsComponent({
+                    mainViewModel.stopTimer()
+                }, {
+                    mainViewModel.loadTimer()
+                })
             }
         }
     }
