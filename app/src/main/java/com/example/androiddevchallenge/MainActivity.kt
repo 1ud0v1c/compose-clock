@@ -23,9 +23,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.androiddevchallenge.model.Date
+import com.example.androiddevchallenge.ui.component.ActionsComponent
 import com.example.androiddevchallenge.ui.component.Clock
+import com.example.androiddevchallenge.ui.component.DigitsComponent
 import com.example.androiddevchallenge.ui.component.TopBar
 import com.example.androiddevchallenge.ui.theme.ClockTheme
 
@@ -43,30 +46,32 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-}
 
-@Composable
-fun ClockScreen(date: Date = Date(9, 0, 0)) {
-    Surface(color = MaterialTheme.colors.background) {
-        Column {
-            TopBar()
-            Clock(date.hour, date.minutes, date.seconds)
+    @Composable
+    fun ClockScreen(date: Date = Date(0, 1, 0)) {
+        Surface(color = MaterialTheme.colors.background) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                TopBar()
+                Clock(date.hour, date.minutes, date.seconds)
+                DigitsComponent()
+                ActionsComponent({}, {})
+            }
         }
     }
-}
 
-@Preview("Light Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun LightPreview() {
-    ClockTheme {
-        ClockScreen()
+    @Preview("Light Theme", widthDp = 360, heightDp = 640)
+    @Composable
+    fun LightPreview() {
+        ClockTheme {
+            ClockScreen()
+        }
     }
-}
 
-@Preview("Dark Theme", widthDp = 360, heightDp = 640)
-@Composable
-fun DarkPreview() {
-    ClockTheme(darkTheme = true) {
-        ClockScreen()
+    @Preview("Dark Theme", widthDp = 360, heightDp = 640)
+    @Composable
+    fun DarkPreview() {
+        ClockTheme(darkTheme = true) {
+            ClockScreen()
+        }
     }
 }
