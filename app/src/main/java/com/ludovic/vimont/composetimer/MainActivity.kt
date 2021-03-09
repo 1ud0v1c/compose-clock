@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge
+package com.ludovic.vimont.composetimer
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Surface
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.androiddevchallenge.model.Date
-import com.example.androiddevchallenge.ui.component.ActionsComponent
-import com.example.androiddevchallenge.ui.component.Clock
-import com.example.androiddevchallenge.ui.component.DigitsComponent
-import com.example.androiddevchallenge.ui.component.TopBar
 import com.example.androiddevchallenge.ui.theme.ClockTheme
+import com.ludovic.vimont.composetimer.model.Date
+import com.ludovic.vimont.composetimer.ui.component.ActionsComponent
+import com.ludovic.vimont.composetimer.ui.component.Clock
+import com.ludovic.vimont.composetimer.ui.component.DigitsComponent
+import com.ludovic.vimont.composetimer.ui.component.TopBar
 
 class MainActivity : AppCompatActivity() {
     private var currentTime = ""
@@ -59,12 +59,15 @@ class MainActivity : AppCompatActivity() {
                     val newDate = currentTime.substring(0, maxValue)
                     mainViewModel.setDate(Date.fromString(newDate))
                 }
-                ActionsComponent({
-                    mainViewModel.stopTimer()
-                    currentTime = ""
-                }, {
-                    mainViewModel.loadTimer()
-                })
+                ActionsComponent(
+                    {
+                        mainViewModel.stopTimer()
+                        currentTime = ""
+                    },
+                    {
+                        mainViewModel.loadTimer()
+                    }
+                )
             }
         }
     }

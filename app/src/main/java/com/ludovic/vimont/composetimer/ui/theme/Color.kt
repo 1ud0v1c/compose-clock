@@ -15,12 +15,11 @@
  */
 package com.example.androiddevchallenge.ui.theme
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 
-val shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(8.dp),
-    large = RoundedCornerShape(16.dp)
-)
+val purple200 = Color(0xFFBB86FC)
+val purple500 = Color(0xFF6200EE)
+val purple700 = Color(0xFF3700B3)
+val teal200 = Color(0xFF03DAC5)
+val black = Color(0xFF000000)
+val white = Color(0xFFFFFFFF)
