@@ -32,11 +32,5 @@ val typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 35.sp
-    ),
-    h2 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 30.sp,
-        color = Color.Gray
     )
 )

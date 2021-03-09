@@ -11,15 +11,32 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class MainViewModel: ViewModel(), MainRepository.TimerListener {
+    companion object {
+        private val defaultDate = Date(0,0,0)
+    }
     private var currentJob: Job? = null
-    private val date = Date(0,0,30)
+    private var date = defaultDate
     private val mainRepository: MainRepository = MainRepository(this)
     val currentDate: MutableState<Date> = mutableStateOf(date)
 
     fun loadTimer() {
-        currentJob = viewModelScope.launch(Dispatchers.Default) {
-            mainRepository.launchTimer(date.toMs())
+        val isInProgress = currentJob?.isActive ?: false
+        if (!isInProgress) {
+            currentJob = viewModelScope.launch(Dispatchers.Default) {
+                mainRepository.launchTimer(date.toMs())
+            }
         }
+    }
+
+    fun stopTimer() {
+        currentJob?.cancel()
+        date = defaultDate
+        currentDate.value = date
+    }
+
+    fun setDate(newDate: Date) {
+        date = newDate
+        currentDate.value = newDate
     }
 
     override fun onTick(remainingTimeInMs: Long) {
@@ -30,10 +47,5 @@ class MainViewModel: ViewModel(), MainRepository.TimerListener {
             (TimeUnit.MILLISECONDS.toSeconds(remainingTimeInMs) - TimeUnit.MINUTES.toSeconds(remainingMinute)).toInt()
         )
         currentDate.value = currentTime
-    }
-
-    fun stopTimer() {
-        currentJob?.cancel()
-        currentDate.value = date
     }
 }
