@@ -17,7 +17,7 @@ fun Clock(
     hour: Int = 9,
     minutes: Int = 0,
     seconds: Int = 0) {
-    Row(modifier = Modifier.fillMaxWidth(),
+    Row(modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center) {
         Text(text = String.format("%02d", hour),
